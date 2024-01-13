@@ -1,7 +1,6 @@
 const express = require('express');
 const students = require('./studentsData'); // Import the student data
 const app = express();
-const port = 3000;
 
 // GET API to return all student data
 app.get('/getAllStudents', (req, res) => {
@@ -9,18 +8,18 @@ app.get('/getAllStudents', (req, res) => {
 });
 
 // GET API to return student data by name
-app.get('/students/:name', (req, res) => {
+app.get('/student/:name', (req, res) => {
     const name = req.params.name;
     const student = students.find(s => s.name.toLowerCase() === name.toLowerCase());
 
     if (student) {
         res.json(student);
     } else {
-        res.status(404).send('Student not found');
+        res.status(404).send('Student record not found, try with another name.');
     }
 });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+app.listen(3000, () => {
+    console.log('Server running on port:3000');
 });
