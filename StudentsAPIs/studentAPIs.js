@@ -19,6 +19,13 @@ app.get('/student/:name', (req, res) => {
     }
 });
 
+// POST API to add a new student
+app.post('/addStudent', (req, res) => {
+    const newStudent = req.body;
+    students.push(newStudent);
+    res.status(201).send('Student added successfully');
+});
+
 // Start the server
 app.listen(3000, () => {
     console.log('Server running on port:3000');
