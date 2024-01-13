@@ -26,6 +26,19 @@ app.post('/addStudent', (req, res) => {
     res.status(201).send('Student added successfully');
 });
 
+// DELETE API to remove a student
+app.delete('/deleteStudent/:name', (req, res) => {
+    const name = req.params.name;
+    const studentIndex = students.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+
+    if (studentIndex > -1) {
+        students.splice(studentIndex, 1);
+        res.send('Student deleted successfully');
+    } else {
+        res.status(404).send('Student not found');
+    }
+});
+
 // Start the server
 app.listen(3000, () => {
     console.log('Server running on port:3000');
