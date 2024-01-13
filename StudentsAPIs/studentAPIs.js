@@ -39,6 +39,19 @@ app.delete('/deleteStudent/:name', (req, res) => {
     }
 });
 
+// PUT API to update a student's data
+app.put('/updateStudent/:name', (req, res) => {
+    const name = req.params.name;
+    const studentIndex = students.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+
+    if (studentIndex > -1) {
+        students[studentIndex] = {...students[studentIndex], ...req.body};
+        res.send('Student updated successfully');
+    } else {
+        res.status(404).send('Student not found');
+    }
+});
+
 // Start the server
 app.listen(3000, () => {
     console.log('Server running on port:3000');
