@@ -39,6 +39,19 @@ app.put("/updateProduct/:id", (req, res) => {
   }
 });
 
+//Delete API to delete a product
+app.delete('/deleteProduct/:id', (req, res) => {
+    const {id} = req.params;
+    const productIndex = groceryStoreData.findIndex(s => s.id === parseInt(id));
+    console.log('product id:', id, productIndex)
+    if (productIndex > -1) {
+        groceryStoreData.splice(productIndex, 1);
+        res.send('Product deleted successfully');
+    } else {
+        res.status(404).send('Product not found');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Grocery store API is running at http://localhost:${port}`);
 });
