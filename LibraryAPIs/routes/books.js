@@ -1,3 +1,6 @@
+const express = require('express');
+const router = express.Router(); // Create a new router instance
+
 // Import books data
 const books = require('../data/books');
 
