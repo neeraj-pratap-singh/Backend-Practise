@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "Product Management APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Coca-Cola\",\n    \"price\": 1.99,\n    \"category\": \"Soft Drink\",\n    \"stock\": 100\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/createProduct",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["createProduct"]
+        }
+      }
+    },
+    {
+      "name": "Get All Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["products"]
+        }
+      }
+    },
+    {
+      "name": "Search Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/searchProducts?name=<search_keyword>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["searchProducts"],
+          "query": [
+            {
+              "key": "name",
+              "value": "<search_keyword>"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Updated Product Name\",\n    \"price\": 2.50,\n    \"category\": \"Updated Category\",\n    \"stock\": 150\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/updateProduct/<product_id>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["updateProduct", "<product_id>"]
+        }
+      }
+    },
+    {
+      "name": "Update Stock",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"stock\": 200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/updateStock/<product_id>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["updateStock", "<product_id>"]
+        }
+      }
+    },
+    {
+      "name": "Delete Product",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/deleteProduct/<product_id>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["deleteProduct", "<product_id>"]
+        }
+      }
+    }
+  ]
+}
