@@ -46,15 +46,34 @@ app.post("/createProduct", async (req, res) => {
     }
 });
 
-// GET: Retrieve all products
+// // GET: Retrieve all products
+// app.get("/products", async (req, res) => {
+//     try {
+//         const products = await Product.find().select({__v:0}).sort("price");
+//         res.json(products);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
 app.get("/products", async (req, res) => {
     try {
-        const products = await Product.find().select({__v:0}).sort("price");
+        // Build the query object based on provided query parameters
+        let query = {};
+        if (req.query.id) {
+            query._id = req.query.id;  // Filter by product ID
+        }
+        if (req.query.category) {
+            query.category = req.query.category;  // Filter by category
+        }
+
+        // Find products based on the query, exclude __v field, and sort by price
+        const products = await Product.find(query).select({ __v: 0 }).sort("price");
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 // GET: Search products by name
 app.get("/searchProducts", async (req, res) => {
