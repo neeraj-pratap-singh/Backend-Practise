@@ -53,10 +53,27 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Default Route
-app.get('/', (req, res) => {
-    res.send('Sample Login App');
+// Middleware to verify token
+const verifyToken = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1]; // Expected "Authorization: Bearer TOKEN"
+    
+    if (!token) return res.status(401).send('Access Denied / Unauthorized request');
+
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified; // Add user payload to request
+        next();
+    } catch (error) {
+        res.status(400).send('Invalid Token');
+    }
+};
+
+// Protected Route
+app.get('/protected', verifyToken, (req, res) => {
+    res.send('This is a protected route. You are authenticated.');
 });
+
+
 
 // Start the server
 const port = process.env.PORT || 3000;
