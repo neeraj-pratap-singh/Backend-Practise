@@ -1,0 +1,58 @@
+{
+    "info": {
+      "_postman_id": "a unique identifier for your collection",
+      "name": "User Authentication API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Signup",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"username\": \"newuser\",\n    \"password\": \"password123\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{baseUrl}}/signup",
+            "host": ["{{baseUrl}}"],
+            "path": ["signup"]
+          }
+        }
+      },
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"username\": \"newuser\",\n    \"password\": \"password123\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{baseUrl}}/login",
+            "host": ["{{baseUrl}}"],
+            "path": ["login"]
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:3000"
+      }
+    ]
+  }
+  

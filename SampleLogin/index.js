@@ -10,26 +10,56 @@ const app = express();
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB', err));
 
 const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['student', 'admin'], required: true }
 });
 
 const User = mongoose.model('User', userSchema);
 
+// Signup Route
+app.post('/signup', async (req, res) => {
+    try {
+        // Encrypt the user's password
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        // Create a new user
+        const user = new User({ username: req.body.username, password: hashedPassword });
+        // Save the user to the database
+        await user.save();
+        res.status(201).send('User created successfully');
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Login Route
+app.post('/login', async (req, res) => {
+    try {
+        // Find the user by username
+        const user = await User.findOne({ username: req.body.username });
+        if (user && await bcrypt.compare(req.body.password, user.password)) {
+            // Create a token
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.status(200).json({ token: token });
+        } else {
+            res.status(400).send('Invalid username or password');
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 // Default Route
 app.get('/', (req, res) => {
     res.send('Sample Login App');
-  });
-  
-  // Start the server
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
+});
+
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-  });
+});
